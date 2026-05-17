@@ -1,7 +1,7 @@
 # Pearl Improvement Proposals (PIPs)
 
-This repository tracks **Pearl Improvement Proposals** — design documents that
-specify new features, processes, or conventions for the Pearl network.
+This repository tracks **Pearl Improvement Proposals** (PIPs): design documents
+that specify new features, processes, or conventions for the Pearl network.
 
 For the human-friendly reading experience, see the PIPs site (rendered from
 this repository): [pips.pearl.dev](https://pips.pearl.dev).
@@ -23,7 +23,7 @@ The process and document format are defined in **[PIP-1](./pip-0001.md)**.
 
 | #    | Title                                                                  | Status | Type              | Category   |
 | ---- | ---------------------------------------------------------------------- | ------ | ----------------- | ---------- |
-| [1](./pip-0001.md) | PIP Purpose and Guidelines                                             | Active | Process           | —          |
+| [1](./pip-0001.md) | PIP Purpose and Guidelines                                             | Active | Process           | (none)     |
 | [2](./pip-0002.md) | Grouped-GEMM Proof-of-Useful-Work for Mixture-of-Experts               | Draft  | Standards Track   | Consensus  |
 
 ## Submitting a new PIP
@@ -53,14 +53,14 @@ that PIPs are well-formatted, in scope, and clearly written.
 
 ## Statuses
 
-- **Draft** — Under active editing. Merged but not final.
-- **Proposed** — Feature-complete, open for broader community review.
-- **Active** — Ongoing process or guideline (Process / Informational PIPs).
-- **Final** — Accepted Standards Track change that has been deployed.
-- **Withdrawn** — Withdrawn by its author(s).
-- **Rejected** — Formally rejected; will not be pursued in current form.
-- **Replaced** — Obsoleted by a later PIP (see `superseded-by`).
-- **Obsolete** — No longer in use; preserved for historical record.
+- **Draft**: Under active editing. Merged but not final.
+- **Proposed**: Feature-complete, open for broader community review.
+- **Active**: Ongoing process or guideline (Process / Informational PIPs).
+- **Final**: Accepted Standards Track change that has been deployed.
+- **Withdrawn**: Withdrawn by its author(s).
+- **Rejected**: Formally rejected; will not be pursued in current form.
+- **Replaced**: Obsoleted by a later PIP (see `superseded-by`).
+- **Obsolete**: No longer in use; preserved for historical record.
 
 ## Copyright
 
