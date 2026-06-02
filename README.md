@@ -3,6 +3,12 @@
 This repository tracks **Pearl Improvement Proposals** (PIPs): design documents
 that specify new features, processes, or conventions for the Pearl network.
 
+Having a PIP published here indicates that the proposal is in scope and has
+met the formal criteria described in PIP-1. It does not indicate that the
+proposal has community consensus or that it is about to be adopted. PIP
+editors are expected to be liberal with publishing PIPs and to try not to be
+too involved in decision-making on behalf of the community.
+
 For the human-friendly reading experience, see the PIPs site (rendered from
 this repository): [pips.pearl.dev](https://pips.pearl.dev).
 
@@ -21,10 +27,10 @@ The process and document format are defined in **[PIP-1](./pip-0001.md)**.
 
 ## Index
 
-| #    | Title                                                                  | Status | Type              | Category   |
-| ---- | ---------------------------------------------------------------------- | ------ | ----------------- | ---------- |
-| [1](./pip-0001.md) | PIP Purpose and Guidelines                                             | Active | Process           | (none)     |
-| [2](./pip-0002.md) | Grouped-GEMM Proof-of-Useful-Work for Mixture-of-Experts               | Draft  | Standards Track   | Consensus  |
+| # | Title | Status | Type | Category |
+| - | ----- | ------ | ---- | -------- |
+| [1](./pip-0001.md) | PIP Purpose and Guidelines | Active | Process | -- |
+| [2](./pip-0002.md) | Grouped-GEMM Proof-of-Useful-Work for Mixture-of-Experts | Draft | Standards Track | Consensus |
 
 ## Submitting a new PIP
 
