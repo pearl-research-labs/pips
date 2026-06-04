@@ -1,0 +1,6 @@
+{
+  "ignorePatterns": [
+    { "pattern": "^https?://" }
+  ],
+  "aliveStatusCodes": [200, 206]
+}
