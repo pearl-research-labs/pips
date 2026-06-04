@@ -27,10 +27,12 @@ The process and document format are defined in **[PIP-1](./pip-0001.md)**.
 
 ## Index
 
+<!-- BEGIN PIP INDEX (auto-generated; run `python scripts/build_table.py` to update) -->
 | # | Title | Status | Type | Category |
 | - | ----- | ------ | ---- | -------- |
 | [1](./pip-0001.md) | PIP Purpose and Guidelines | Active | Process | -- |
-| [2](./pip-0002.md) | Grouped-GEMM Proof-of-Useful-Work for Mixture-of-Experts | Draft | Standards Track | Consensus |
+| [2](./pip-0002.md) | Grouped-GEMM Proof-of-Useful-Work for Mixture-of-Experts | Proposed | Standards Track | Consensus |
+<!-- END PIP INDEX -->
 
 ## Submitting a new PIP
 
