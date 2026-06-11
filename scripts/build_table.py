@@ -23,6 +23,7 @@ PIP_GLOB = "pip-[0-9]*.md"
 BEGIN_MARKER = "<!-- BEGIN PIP INDEX"
 END_MARKER = "<!-- END PIP INDEX -->"
 
+FENCE = "---"
 EMPTY_FIELD = "--"
 TABLE_HEADER = "| # | Title | Status | Type | Category |"
 TABLE_DIVIDER = "| - | ----- | ------ | ---- | -------- |"
@@ -50,26 +51,40 @@ class PipError(Exception):
     """Raised when a PIP file has invalid or missing front-matter."""
 
 
+def _escape_cell(value: str) -> str:
+    """Escape characters that would break a Markdown table cell."""
+    return value.replace("|", "\\|")
+
+
+def _unquote(value: str) -> str:
+    """Strip a single pair of matching surrounding quotes, if present."""
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
+        return value[1:-1]
+    return value
+
+
 def parse_front_matter(path: Path) -> dict[str, str]:
     """Return the flat key/value front-matter of a PIP markdown file."""
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---"):
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines or lines[0].strip() != FENCE:
         raise PipError(f"{path.name}: missing front-matter (no leading '---')")
 
-    # Split on the first two '---' fences.
-    parts = text.split("---", 2)
-    if len(parts) < 3:
-        raise PipError(f"{path.name}: unterminated front-matter block")
-
     fields: dict[str, str] = {}
-    for raw_line in parts[1].splitlines():
+    closed = False
+    for raw_line in lines[1:]:
+        if raw_line.strip() == FENCE:
+            closed = True
+            break
         line = raw_line.strip()
         if not line or line.startswith("#"):
             continue
         if ":" not in line:
             raise PipError(f"{path.name}: malformed front-matter line: {raw_line!r}")
         key, value = line.split(":", 1)
-        fields[key.strip()] = value.strip()
+        fields[key.strip()] = _unquote(value.strip())
+
+    if not closed:
+        raise PipError(f"{path.name}: unterminated front-matter block")
     return fields
 
 
@@ -99,9 +114,10 @@ def build_row(path: Path) -> tuple[int, str]:
         raise PipError(f"{path.name}: unknown type {pip_type!r}")
 
     category = fields.get("category") or EMPTY_FIELD
+    title = _escape_cell(fields["title"])
     row = (
-        f"| [{number}](./{path.name}) | {fields['title']} | "
-        f"{status} | {pip_type} | {category} |"
+        f"| [{number}](./{path.name}) | {title} | "
+        f"{status} | {pip_type} | {_escape_cell(category)} |"
     )
     return number, row
 
@@ -125,7 +141,7 @@ def build_table() -> str:
 def replace_between_markers(readme: str, table: str) -> str:
     """Return README text with the index region replaced by ``table``."""
     pattern = re.compile(
-        re.escape(BEGIN_MARKER) + r".*?-->\n.*?\n" + re.escape(END_MARKER),
+        re.escape(BEGIN_MARKER) + r".*?" + re.escape(END_MARKER),
         re.DOTALL,
     )
     match = pattern.search(readme)
@@ -173,7 +189,7 @@ def main() -> int:
         print("README.md Index table is up to date.")
         return 0
 
-    README_PATH.write_text(updated, encoding="utf-8")
+    README_PATH.write_text(updated, encoding="utf-8", newline="\n")
     print("README.md Index table regenerated.")
     return 0
 
