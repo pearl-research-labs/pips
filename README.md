@@ -31,7 +31,7 @@ The process and document format are defined in **[PIP-1](./pip-0001.md)**.
 | # | Title | Status | Type | Category |
 | - | ----- | ------ | ---- | -------- |
 | [1](./pip-0001.md) | PIP Purpose and Guidelines | Active | Process | -- |
-| [2](./pip-0002.md) | Grouped-GEMM Proof-of-Useful-Work for Mixture-of-Experts | Proposed | Standards Track | Consensus |
+| [2](./pip-0002.md) | Grouped-GEMM Proof-of-Useful-Work for Mixture-of-Experts | Final | Standards Track | Consensus |
 <!-- END PIP INDEX -->
 
 ## Submitting a new PIP
