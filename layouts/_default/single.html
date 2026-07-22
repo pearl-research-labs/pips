@@ -1,0 +1,109 @@
+{{ define "main" }}
+{{- $status := .Params.status -}}
+<article class="pip">
+  {{ if eq $status "Draft" }}
+  <div class="banner banner-draft">This PIP is a <strong>Draft</strong>: it is under active development and its contents may change before it is finalized.</div>
+  {{ else if eq $status "Proposed" }}
+  <div class="banner banner-proposed">This PIP is <strong>Proposed</strong>: it is feature-complete and open for broader community review.</div>
+  {{ else if eq $status "Withdrawn" }}
+  <div class="banner banner-terminal">This PIP was <strong>Withdrawn</strong> by its author(s) and is preserved for historical record.</div>
+  {{ else if eq $status "Rejected" }}
+  <div class="banner banner-terminal">This PIP was <strong>Rejected</strong> and will not be pursued in its current form.</div>
+  {{ else if eq $status "Replaced" }}
+  <div class="banner banner-terminal">This PIP has been <strong>Replaced</strong>{{ with index .Params "superseded-by" }} by {{ partial "pipnums.html" . }}{{ end }}.</div>
+  {{ else if eq $status "Obsolete" }}
+  <div class="banner banner-terminal">This PIP is <strong>Obsolete</strong>: it describes a feature or process that is no longer in use.</div>
+  {{ end }}
+
+  <header class="pip-header">
+    <h1>PIP-{{ .Params.pip }}: {{ .Title }}</h1>
+    {{ with .Description }}<p class="pip-description">{{ . }}</p>{{ end }}
+  </header>
+
+  <table class="preamble">
+    <tbody>
+      <tr>
+        <th scope="row">Author</th>
+        <td>{{ partial "authorlist.html" .Params.author }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Status</th>
+        <td><span class="status status-{{ $status | urlize }}">{{ $status }}</span></td>
+      </tr>
+      <tr>
+        <th scope="row">Type</th>
+        <td>
+          {{- with site.GetPage (printf "/%s" (.Params.type | urlize)) -}}
+          <a href="{{ .RelPermalink }}">{{ $.Params.type }}</a>
+          {{- else -}}
+          {{ .Params.type }}
+          {{- end -}}
+        </td>
+      </tr>
+      {{ with .Params.category }}
+      <tr>
+        <th scope="row">Category</th>
+        <td>
+          {{- with site.GetPage (printf "/%s" (. | urlize)) -}}
+          <a href="{{ .RelPermalink }}">{{ $.Params.category }}</a>
+          {{- else -}}
+          {{ . }}
+          {{- end -}}
+        </td>
+      </tr>
+      {{ end }}
+      <tr>
+        <th scope="row">Created</th>
+        <td>{{ .Date.Format "2006-01-02" }}</td>
+      </tr>
+      {{ with .Params.requires }}
+      <tr>
+        <th scope="row">Requires</th>
+        <td>{{ partial "pipnums.html" . }}</td>
+      </tr>
+      {{ end }}
+      {{ with .Params.replaces }}
+      <tr>
+        <th scope="row">Replaces</th>
+        <td>{{ partial "pipnums.html" . }}</td>
+      </tr>
+      {{ end }}
+      {{ with index .Params "superseded-by" }}
+      <tr>
+        <th scope="row">Superseded by</th>
+        <td>{{ partial "pipnums.html" . }}</td>
+      </tr>
+      {{ end }}
+      {{ with index .Params "discussions-to" }}
+      <tr>
+        <th scope="row">Discussions</th>
+        <td><a href="{{ . }}">{{ . }}</a></td>
+      </tr>
+      {{ end }}
+      <tr>
+        <th scope="row">Source</th>
+        <td><a href="{{ site.Params.github }}/blob/main/PIPS/{{ .File.LogicalName }}">{{ .File.LogicalName }}</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <details class="toc" open>
+    <summary>Table of contents</summary>
+    {{ .TableOfContents }}
+  </details>
+
+  <div class="pip-content">
+    {{ .Content }}
+  </div>
+
+  <footer class="pip-citation">
+    <h2 id="citation">Citation</h2>
+    <p>Please cite this document as:</p>
+    <p class="citation">
+      {{ partial "authorlist.html" .Params.author }}, "PIP-{{ .Params.pip }}: {{ .Title }},"
+      <em>Pearl Improvement Proposals</em>, no. {{ .Params.pip }}, {{ .Date.Format "January 2006" }}.
+      [Online serial]. Available: <a href="{{ .Permalink }}">{{ .Permalink }}</a>.
+    </p>
+  </footer>
+</article>
+{{ end }}

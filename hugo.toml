@@ -1,0 +1,82 @@
+baseURL = "https://pearl-research-labs.github.io/pips/"
+title = "Pearl Improvement Proposals"
+locale = "en"
+timeZone = "UTC"
+
+# Navigation is by fixed listing pages (EIP-style), not taxonomies.
+disableKinds = ["taxonomy", "term"]
+
+# Keep the EIP-style repository layout: proposals live in PIPS/ and per-PIP
+# images in assets/; site/ holds the listing-page stubs. Declaring mounts
+# replaces Hugo's defaults, so layouts and static must be re-declared as well.
+[[module.mounts]]
+  source = "PIPS"
+  target = "content"
+
+[[module.mounts]]
+  source = "site"
+  target = "content"
+
+[[module.mounts]]
+  source = "layouts"
+  target = "layouts"
+
+[[module.mounts]]
+  source = "static"
+  target = "static"
+
+[[module.mounts]]
+  source = "assets"
+  target = "static/assets"
+  files = ["! README.md"]
+
+# PIP preambles use `created` (per PIP-1) rather than Hugo's `date`.
+[frontmatter]
+  date = ["created", "date"]
+
+[params]
+  description = "Pearl Improvement Proposals (PIPs) describe standards for the Pearl network, including core protocol specifications, interfaces, and processes."
+  github = "https://github.com/pearl-research-labs/pips"
+  statusOrder = ["Active", "Final", "Proposed", "Draft", "Withdrawn", "Rejected", "Replaced", "Obsolete"]
+
+# Fixed header navigation, EIP-style: every category and type is always
+# visible, backed by the listing stubs in site/.
+[[params.nav]]
+  name = "All"
+  url = "all/"
+
+[[params.nav]]
+  name = "Consensus"
+  url = "consensus/"
+
+[[params.nav]]
+  name = "Networking"
+  url = "networking/"
+
+[[params.nav]]
+  name = "Interface"
+  url = "interface/"
+
+[[params.nav]]
+  name = "Applications"
+  url = "applications/"
+
+[[params.nav]]
+  name = "Process"
+  url = "process/"
+
+[[params.nav]]
+  name = "Informational"
+  url = "informational/"
+
+[markup]
+  [markup.highlight]
+    style = "github"
+    noClasses = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML"]

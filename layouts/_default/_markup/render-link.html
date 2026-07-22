@@ -1,0 +1,12 @@
+{{- /* Resolves relative links to PIP markdown files (e.g. ./pip-0001.md) to
+     the rendered page, so cross-references work on GitHub and on the site. */ -}}
+{{- $dest := .Destination -}}
+{{- $u := urls.Parse $dest -}}
+{{- if and (not $u.IsAbs) (strings.HasSuffix $u.Path ".md") -}}
+  {{- with .Page.GetPage (strings.TrimPrefix "./" $u.Path) -}}
+    {{- $dest = .RelPermalink -}}
+    {{- with $u.Fragment }}{{ $dest = printf "%s#%s" $dest . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text }}</a>
+{{- /* Trailing comment keeps whitespace out of rendered inline links. */ -}}

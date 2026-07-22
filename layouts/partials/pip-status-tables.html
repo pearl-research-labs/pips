@@ -1,0 +1,16 @@
+{{- /* Renders a page collection as status-grouped PIP tables; context is the
+     collection. Status order follows params.statusOrder. */ -}}
+{{ $pages := . }}
+{{ if $pages }}
+{{ range $status := site.Params.statusOrder }}
+{{ $group := where $pages "Params.status" $status }}
+{{ with $group }}
+<section class="status-group">
+  <h2 id="{{ $status | urlize }}">{{ $status }} <span class="count">{{ len . }}</span></h2>
+  {{ partial "pip-table.html" (sort . "Params.pip") }}
+</section>
+{{ end }}
+{{ end }}
+{{ else }}
+<p class="empty">No PIPs here yet.</p>
+{{ end }}

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Submit a PIP
+    url: https://github.com/pearl-research-labs/pips/blob/main/CONTRIBUTING.md
+    about: Proposals are submitted as pull requests, not issues. Start from the contributing guide.

@@ -1,0 +1,12 @@
+{{- /* Renders a `requires` / `replaces` / `superseded-by` preamble value
+     (a PIP number or comma-separated list of numbers) as links. */ -}}
+{{- $refs := printf "%v" . -}}
+{{- range $i, $ref := split $refs "," -}}
+  {{- if $i }}, {{ end -}}
+  {{- $n := int (trim $ref " ") -}}
+  {{- with site.GetPage (printf "/pip-%04d" $n) -}}
+    <a href="{{ .RelPermalink }}">PIP-{{ $n }}</a>
+  {{- else -}}
+    PIP-{{ $n }}
+  {{- end -}}
+{{- end -}}

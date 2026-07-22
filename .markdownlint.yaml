@@ -1,0 +1,20 @@
+# Permissive markdownlint configuration: enforce basic hygiene without
+# constraining specification prose. https://github.com/DavidAnson/markdownlint
+default: true
+
+# Specification prose, tables, and long URLs routinely exceed line limits.
+MD013: false
+
+# Identical headings (e.g. "Specification") may repeat across sections.
+MD024:
+  siblings_only: true
+
+# PIP titles come from front matter; document bodies start at h2.
+MD025: false
+MD041: false
+
+# Inline HTML is occasionally needed (anchors, tables, badges).
+MD033: false
+
+# Protocol pseudocode blocks intentionally carry no language tag.
+MD040: false

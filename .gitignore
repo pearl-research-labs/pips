@@ -3,3 +3,8 @@ node_modules/
 *.log
 .venv/
 __pycache__/
+
+# Hugo build outputs
+public/
+resources/
+.hugo_build.lock
