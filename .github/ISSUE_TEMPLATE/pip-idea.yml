@@ -1,0 +1,45 @@
+name: PIP idea
+description: Float a pre-draft idea to surface duplicates and gather early objections before writing a full PIP.
+title: "Idea: "
+labels: ["idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Per PIP-1, discussing an idea here (or on the Pearl research forum) is the recommended
+        first step before opening a PIP pull request.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is the change or topic, in a paragraph?
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What concrete problem does this solve? Why is the current protocol or process insufficient?
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Expected PIP type
+      options:
+        - "Standards Track: Consensus"
+        - "Standards Track: Networking"
+        - "Standards Track: Interface"
+        - "Standards Track: Applications"
+        - "Process"
+        - "Informational"
+        - "Not sure yet"
+    validations:
+      required: false
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Prior art and alternatives
+      description: Related PIPs, prior discussions, or alternative approaches you considered.
+    validations:
+      required: false

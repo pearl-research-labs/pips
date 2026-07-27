@@ -1,0 +1,19 @@
+{{- /* Renders a PIP `author` preamble value: a comma-separated list of
+     "Name (@github-handle)", "Name <email>", or plain-name entries. */ -}}
+{{- range $i, $raw := split . "," -}}
+  {{- if $i }}, {{ end -}}
+  {{- $a := trim $raw " " -}}
+  {{- if in $a "(@" -}}
+    {{- $parts := split $a "(@" -}}
+    {{- $name := trim (index $parts 0) " " -}}
+    {{- $handle := trim (index $parts 1) ") " -}}
+    {{- $name }} (<a href="https://github.com/{{ $handle }}">@{{ $handle }}</a>)
+  {{- else if in $a "<" -}}
+    {{- $parts := split $a "<" -}}
+    {{- $name := trim (index $parts 0) " " -}}
+    {{- $email := trim (index $parts 1) "> " -}}
+    {{- $name }} &lt;<a href="mailto:{{ $email }}">{{ $email }}</a>&gt;
+  {{- else -}}
+    {{- $a -}}
+  {{- end -}}
+{{- end -}}

@@ -12,6 +12,9 @@ created: <YYYY-MM-DD>
 # replaces: <PIP number this PIP replaces>
 # superseded-by: <PIP number that replaces this PIP, when applicable>
 # discussions-to: <URL of the canonical discussion thread>
+#
+# Save this file as PIPS/pip-9999.md; editors assign the real number on merge.
+# Images and diagrams belong in assets/pip-XXXX/, referenced by relative link.
 ---
 
 ## Abstract

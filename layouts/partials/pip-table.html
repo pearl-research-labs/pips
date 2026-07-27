@@ -1,0 +1,21 @@
+{{- /* Renders a table of PIPs; context is a sorted page collection. */ -}}
+<table class="pip-table">
+  <thead>
+    <tr>
+      <th class="col-number">Number</th>
+      <th>Title</th>
+      <th class="col-type">Type</th>
+      <th class="col-authors">Authors</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range . }}
+    <tr>
+      <td class="col-number"><a href="{{ .RelPermalink }}">{{ .Params.pip }}</a></td>
+      <td><a href="{{ .RelPermalink }}">{{ .Title }}</a></td>
+      <td class="col-type">{{ .Params.type }}{{ with .Params.category }}: {{ . }}{{ end }}</td>
+      <td class="col-authors">{{ partial "authorlist.html" .Params.author }}</td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>

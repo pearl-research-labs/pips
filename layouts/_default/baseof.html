@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale }}">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{- $pageTitle := .Title -}}
+  {{- with .Params.pip }}{{ $pageTitle = printf "PIP-%v: %s" . $.Page.Title }}{{ end -}}
+  {{- if .IsHome }}{{ $pageTitle = site.Title }}{{ end }}
+  <title>{{ $pageTitle }}{{ if not .IsHome }} | {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ .Description | default site.Params.description }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="preload" href="{{ "fonts/IBMPlexSans-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ "fonts/IBMPlexMono-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  {{ range .AlternativeOutputFormats -}}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+  {{ end -}}
+  <meta property="og:site_name" content="{{ site.Title }}">
+  <meta property="og:title" content="{{ $pageTitle }}">
+  <meta property="og:description" content="{{ .Description | default site.Params.description }}">
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="site-title" href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+      <nav class="site-nav">
+        {{- range site.Params.nav }}
+        <a href="{{ .url | relURL }}">{{ .name }}</a>
+        {{- end }}
+        <a href="{{ site.Params.github }}">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>
+        All PIPs, unless explicitly stated otherwise, are released into the public domain under
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.
+        This site is generated from the
+        <a href="{{ site.Params.github }}">pearl-research-labs/pips</a> repository.
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>

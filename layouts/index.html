@@ -1,0 +1,94 @@
+{{ define "main" }}
+<section class="intro">
+  <h1>Pearl Improvement Proposals</h1>
+  <p>
+    Pearl Improvement Proposals (PIPs) describe standards for the Pearl network, including core
+    protocol specifications, networking and interface conventions, application-level standards,
+    and the processes that govern Pearl development. A PIP is a short, focused document that
+    describes a single change, explains its motivation, and specifies it precisely enough to
+    implement.
+  </p>
+  <p>
+    Browse <a href="{{ "all/" | relURL }}">all proposals</a>, or by category and type from the
+    header. A PIP published here is in scope and well-formed; that does not by itself indicate
+    community consensus or imminent adoption.
+  </p>
+</section>
+
+<section class="contributing">
+  <h2 id="contributing">Contributing</h2>
+  <p>
+    First review {{ with site.GetPage "/pip-0001" }}<a href="{{ .RelPermalink }}">PIP-1</a>{{ end }},
+    which defines the process and document format. Then fork the
+    <a href="{{ site.Params.github }}">repository</a>, copy
+    <a href="{{ site.Params.github }}/blob/main/pip-template.md">the template</a> to
+    <code>PIPS/pip-9999.md</code>, and submit a pull request. The
+    <a href="{{ site.Params.github }}/blob/main/CONTRIBUTING.md">contributing guide</a> lists the
+    checks CI runs against every submission.
+  </p>
+</section>
+
+<section class="glossary">
+  <h2 id="statuses">PIP status terms</h2>
+  <dl>
+    <dt><span class="status status-draft">Draft</span></dt>
+    <dd>Under active editing by its author(s); merged so it has a stable number, but not final.</dd>
+    <dt><span class="status status-proposed">Proposed</span></dt>
+    <dd>Feature-complete and open for broader community review.</dd>
+    <dt><span class="status status-active">Active</span></dt>
+    <dd>An ongoing process or guideline (Process and Informational PIPs only).</dd>
+    <dt><span class="status status-final">Final</span></dt>
+    <dd>An accepted Standards Track change that has been deployed.</dd>
+    <dt><span class="status status-withdrawn">Withdrawn</span></dt>
+    <dd>Withdrawn by its author(s).</dd>
+    <dt><span class="status status-rejected">Rejected</span></dt>
+    <dd>Formally rejected; will not be pursued in its current form.</dd>
+    <dt><span class="status status-replaced">Replaced</span></dt>
+    <dd>Obsoleted by a later PIP, named in its <code>superseded-by</code> field.</dd>
+    <dt><span class="status status-obsolete">Obsolete</span></dt>
+    <dd>No longer in use; preserved for historical record.</dd>
+  </dl>
+</section>
+
+<section class="types">
+  <h2 id="types">PIP types</h2>
+  <p>PIPs are separated into a number of types, and each has its own list of PIPs.</p>
+
+  {{ $pips := site.RegularPages }}
+  {{ $standards := where $pips "Params.type" "Standards Track" }}
+  <h3>Standards Track ({{ len $standards }})</h3>
+  <p>
+    Describes any change that affects most or all Pearl implementations, or any change or
+    addition that affects the interoperability of Pearl software. Standards Track PIPs are
+    further broken down into categories:
+  </p>
+  <ul>
+    {{ range $cat := slice "Consensus" "Networking" "Interface" "Applications" }}
+    {{ $n := len (where $standards "Params.category" $cat) }}
+    <li>
+      {{ with site.GetPage (printf "/%s" ($cat | urlize)) }}<a href="{{ .RelPermalink }}">{{ $cat }}</a>{{ else }}{{ $cat }}{{ end }}
+      ({{ $n }})
+      {{ if eq $cat "Consensus" }}- changes that require a hard or soft fork.
+      {{ else if eq $cat "Networking" }}- peer-to-peer protocols, message formats, and relay rules that do not change consensus.
+      {{ else if eq $cat "Interface" }}- client APIs, RPC schemas, and other interfaces used by external software.
+      {{ else }}- application-level standards: address formats, key derivation, signing protocols, URI schemes.
+      {{ end }}
+    </li>
+    {{ end }}
+  </ul>
+
+  {{ $process := where $pips "Params.type" "Process" }}
+  <h3>{{ with site.GetPage "/process" }}<a href="{{ .RelPermalink }}">Process</a>{{ else }}Process{{ end }} ({{ len $process }})</h3>
+  <p>
+    Describes a process surrounding Pearl, or proposes a change to one. Process PIPs apply to
+    areas outside the Pearl protocol itself and may not be ignored.
+  </p>
+
+  {{ $informational := where $pips "Params.type" "Informational" }}
+  <h3>{{ with site.GetPage "/informational" }}<a href="{{ .RelPermalink }}">Informational</a>{{ else }}Informational{{ end }} ({{ len $informational }})</h3>
+  <p>
+    Provides general guidelines or background information to the Pearl community, but does not
+    propose a new feature. Implementers are free to ignore Informational PIPs.
+  </p>
+</section>
+{{ end }}
